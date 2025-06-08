@@ -1,0 +1,86 @@
+{% load static %}
+
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+    <div class="app-brand demo">
+      <a href="/" class="app-brand-link">
+        <span class="app-brand-logo demo">
+          
+         <img src="{% static 'main/img/logo/schedly-logo-2.png' %}" alt="Schedly" width="200" />
+        </span>
+        {% comment %} <span class="app-brand-text demo menu-text fw-bold">BharathNet</span> {% endcomment %}
+      </a>
+
+      <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
+        <i class="ti menu-toggle-icon d-none d-xl-block align-middle"></i>
+        <i class="ti ti-x d-block d-xl-none ti-md align-middle"></i>
+      </a>
+    </div>
+
+    <div class="menu-inner-shadow"></div>
+
+    <ul class="menu-inner py-1">
+      <!-- Dashboards -->
+       
+      <li class="menu-item active open">
+        <a href="{% url 'index' %}" class="menu-link">
+          <i class="menu-icon tf-icons ti ti-smart-home"></i>
+          <div data-i18n="Dashboards">Dashboards</div>
+          {% comment %} <div class="badge bg-danger rounded-pill ms-auto">5</div> {% endcomment %}
+        </a>
+      </li>
+      {% if request.user.is_superuser or request.user.is_staff %}
+      <li class="menu-header small">
+        <span class="menu-header-text" data-i18n="Administration">Administration</span>
+      </li>
+      <li class="menu-item">
+        <a href="{% url 'users' %}" class="menu-link">
+          <i class="menu-icon tf-icons ti ti-users"></i>
+          <div data-i18n="Users">Users</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="{% url 'specialization' %}" class="menu-link">
+          <i class="menu-icon tf-icons ti ti-current-location"></i>
+          <div data-i18n="Specialization">Specialization</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="{% url 'qualification' %}" class="menu-link">
+          <i class="menu-icon tf-icons ti ti-certificate"></i>
+          <div data-i18n="Qualification">Qualification</div>
+        </a>
+      </li>
+      {% endif %}
+      <li class="menu-header small">
+        <span class="menu-header-text" data-i18n="Hospital Admin">Hospital Admin</span>
+      </li>
+      <li class="menu-item">
+       <a href="{% url 'hospitals' %}" class="menu-link">
+        <i class="menu-icon tf-icons ti ti-building-hospital"></i>
+         {% comment %} <img src="{% static 'img/icons/ground-icon.jpg' %}" width="20" height="20" alt="" style="margin-right:8px;"/> {% endcomment %}
+        <div data-i18n="Hospital">Hospital</div>
+       </a>
+     </li> 
+      <li class="menu-item">
+       <a href="{% url 'appoinment' %}" class="menu-link">
+        <i class="menu-icon tf-icons ti ti-calendar-check"></i>
+         {% comment %} <img src="{% static 'img/icons/ground-icon.jpg' %}" width="20" height="20" alt="" style="margin-right:8px;"/> {% endcomment %}
+        <div data-i18n="Appointments">Appointments</div>
+       </a>
+     </li> 
+      <li class="menu-header small">
+        <span class="menu-header-text" data-i18n="Enquiries">Enquiries</span>
+      </li>
+     <li class="menu-item">
+      <a href="{% url 'enquiries' %}" class="menu-link">
+        <i class="menu-icon tf-icons ti ti-message-star"></i>
+        <div data-i18n="Enqiury">Enqiury</div>
+      </a>
+    </li> 
+     <li class="menu-item">
+      <a href="#" class="menu-link">
+        <i class="menu-icon tf-icons ti ti-bubble-plus"></i>
+        <div data-i18n="FAQ">FAQ</div>
+      </a>
+    </li> 
+</aside>

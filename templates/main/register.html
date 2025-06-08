@@ -1,0 +1,191 @@
+{% load widget_tweaks %}
+
+{% load static %}
+<!doctype html>
+
+<html lang="en" class="light-style layout-wide customizer-hide" dir="ltr" data-theme="theme-default" data-assets-path="/static/" data-template="vertical-menu-template" data-style="light">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="description" content="" />
+
+    <title>Login - Schedly</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'main/img/logo/schedly-logo-2.png'  %}"/>
+
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&ampdisplay=swap" rel="stylesheet" />
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="{% static 'vendor/fonts/fontawesome.css' %}" />
+    <link rel="stylesheet" href="{% static 'vendor/fonts/tabler-icons.css' %}" />
+    <link rel="stylesheet" href="{% static 'vendor/fonts/flag-icons.css' %}" />
+
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="{% static 'vendor/css/core.css' %}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{% static 'vendor/css/theme-default.css' %}" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{% static 'css/demo.css' %}" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="{% static 'vendor/libs/node-waves/node-waves.css' %}" />
+    <link rel="stylesheet" href="{% static 'vendor/libs/perfect-scrollbar/perfect-scrollbar.css' %}" />
+    <link rel="stylesheet" href="{% static 'vendor/libs/typeahead-js/typeahead.css' %}" />
+
+    <!-- Vendor -->
+    <link rel="stylesheet" href="{% static 'vendor/libs/node-waves/node-waves.css' %}" />
+    <link rel="stylesheet" href="{% static 'vendor/libs/@form-validation/form-validation.css' %}"/>
+
+    <!-- Page CSS -->
+    <!-- Page -->
+    <link rel="stylesheet" href="{% static 'vendor/css/pages/page-auth.css' %}"/>
+
+    <!-- Helpers -->
+    <script src="{% static 'dah/vendor/js/helpers.js' %}"></script>
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+
+    <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
+    <script src="{% static 'dah/vendor/js/template-customizer.js' %}"></script>
+
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="{% static 'dah/js/config.js' %}"></script>
+
+    <!-- htmx cdn -->
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <style>
+      .password-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.password-toggle {
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: #666;
+}
+.scrollable-form {
+  max-height: 100vh;
+  overflow-y: auto;
+  padding: 2rem;
+}
+
+    </style>
+  </head>
+
+  <body>
+    <!-- Content -->
+<div class="authentication-wrapper authentication-cover bg-light">
+  <div class="authentication-inner row m-0 min-vh-100">
+
+    <!-- Left: Branding / Illustration -->
+    <div class="d-none d-lg-flex col-lg-8 p-0">
+      <div class="auth-cover-bg d-flex justify-content-center align-items-center w-100 h-100 bg-primary text-white">
+        <div class="text-center px-5">
+          <img src="{% static 'main/img/logo/bg-login.png' %}" alt="Schedly Illustration"
+               class="img-fluid mb-4" style="max-width: 400px;" />
+          <h2 class="fw-bold">Welcome to Schedly</h2>
+          <p class="mt-3 fs-5">Effortless scheduling for doctors and patients.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Registration Form (Scrollable) -->
+    <div class="col-12 col-lg-4 d-flex align-items-center bg-white p-0">
+      <div class="w-100 d-flex flex-column" style="max-height: 100vh; overflow-y: auto; padding: 2rem 2.5rem;">
+
+        <div class="text-center mb-4">
+          <img src="{% static 'main/img/logo/schedly-logo-2.png' %}" alt="Schedly Logo" class="mb-3" style="width: 100px;">
+          <h4 class="fw-bold">Create your account</h4>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data"
+              hx-post="{% url 'main_register' %}"
+              hx-target="#registration-response"
+              class="d-flex flex-column gap-3"
+              >
+          {% csrf_token %}
+
+          <!-- Role selection -->
+          <div>
+            <label class="form-label fw-semibold">Select Role</label>
+            
+            {{ form.role|add_class:"form-select form-select-lg" }}
+          </div>
+
+          <!-- HTMX dynamic role-specific fields -->
+          <div
+            hx-get="{% url 'load_role_specific_fields' %}"
+            hx-trigger="change from:#id_role"
+            hx-target="#role-specific-fields"
+            hx-include="#id_role">
+          </div>
+          <div id="role-specific-fields"></div>
+
+          <!-- Submit -->
+          <div id="register-button-container" class="d-none">
+            <button type="submit" class="btn btn-primary btn-lg w-100" hx-on="after-request: this.closest('form').reset()">Register</button>
+          </div>
+
+          <!-- Feedback -->
+          <div id="registration-response"></div>
+        </form>
+
+        <p class="text-center mt-4 small fs-4">
+          Already have an account?
+          <a href="{% url 'main_login' %}" class="fw-semibold text-decoration-none text-primary">Login</a>
+        </p>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+
+    <script src="{% static 'vendor/libs/jquery/jquery.js' %}"></script>
+    <script src="{% static 'vendor/libs/popper/popper.js' %}"></script>
+    <script src="{% static 'vendor/js/bootstrap.js' %}"></script>
+    <script src="{% static 'vendor/libs/node-waves/node-waves.js' %}"></script>
+    <script src="{% static 'vendor/libs/perfect-scrollbar/perfect-scrollbar.js' %}"></script>
+    <script src="{% static 'vendor/libs/hammer/hammer.js' %}"></script>
+    <script src="{% static 'vendor/libs/i18n/i18n.js' %}"></script>
+    <script src="{% static 'vendor/libs/typeahead-js/typeahead.js' %}"></script>
+    <script src="{% static 'vendor/js/menu.js' %}"></script>
+
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+    <script src="{% static 'vendor/libs/@form-validation/popular.js' %}"></script>
+    <script src="{% static 'vendor/libs/@form-validation/bootstrap5.js' %}"></script>
+    <script src="{% static 'vendor/libs/@form-validation/auto-focus.js' %}"></script>
+
+    <!-- Main JS -->
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <!-- Page JS -->
+    <script src="{% static 'js/pages-auth.js' %}"></script>
+
+    <script>
+      function togglePassword(inputId, el) {
+        const input = document.getElementById(inputId);
+        if (input.type === "password") {
+          input.type = "text";
+          el.textContent = '🙈';
+        } else {
+          input.type = "password";
+          el.textContent = '👁️';
+        }
+      }
+</script>
+  </body>
+</html>

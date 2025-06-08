@@ -1,0 +1,185 @@
+/*
+Template Name: Cricket Club
+File: Layout CSS
+Author: TemplatesOnWeb
+Author URI: https://www.templateonweb.com/
+Licence: <a href="https://www.templateonweb.com/license">Website Template Licence</a>
+*/
+
+
+/*********************matches****************/
+
+.center_match {
+    background-image: url(../image/3.jpg);
+    background-position: center center;
+    background-size: cover;
+}
+
+.center_about {
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.about_pg1lilil span {
+    width: 55px;
+    height: 55px;
+    line-height: 55px;
+}
+
+.about_pg1lil:hover {
+    background: var(--black)!important;
+    transition: 0.3s;
+}
+
+.about_pg1lil:hover h5 {
+    color: var(--bs-white)!important;
+    transition: 0.3s;
+}
+
+.about_pg1lilo:hover {
+    background: var(--yellow)!important;
+    transition: 0.3s;
+}
+
+.about_pg2i {
+    border-right: 1px solid var(--border_light);
+}
+
+.about_pg2 {
+    border-top: 1px solid var(--border_light);
+    border-bottom: 1px solid var(--border_light);
+}
+
+.artic_1l2 {
+    width: 80%;
+    left: 10%;
+    bottom: -100px;
+}
+
+.artic_1l:hover .blog_h1lili1 h5 {
+    transition: 0.3s;
+    background: var(--yellow)!important;
+    color: var(--black)!important;
+}
+
+.blog_h1lili1 h5 {
+    width: 70px;
+    height: 70px;
+    padding-top: 10px;
+}
+
+#artic {
+    padding-bottom: 160px;
+}
+
+.team_1l:hover .team_1l1i2 {
+    background: var(--yellow)!important;
+}
+
+
+/*********************matches_end****************/
+
+@media screen and (max-width: 767px) {
+    .about_pg1l br {
+        display: none;
+    }
+    .about_pg1lil {
+        margin-top: 10px;
+        text-align: center;
+    }
+    .about_pg1lilir {
+        margin-top: 10px;
+    }
+    .explore_1rilir {
+        margin-top: 15px;
+    }
+    .about_pg1r {
+        margin-top: 15px;
+    }
+    .about_pg2i {
+        text-align: center;
+        border: none;
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+    .about_pg2i1r {
+        margin-top: 10px;
+    }
+    .artic_1l2 {
+        position: static!important;
+        width: 100%;
+    }
+    .artic_1l {
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+    #artic {
+        padding-bottom: 40px;
+    }
+    .vacation_1 .font_50 {
+        font-size: 36px;
+    }
+    .team_1l {
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+    .profile1_inner_left {
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+    .profile1_inner1 h2 {
+        text-align: center;
+    }
+    .profile1_inner1_inner_right {
+        margin-top: 15px;
+    }
+    .team_1l1i1 img {
+        width: 100%;
+    }
+}
+
+@media (min-width:576px) and (max-width:767px) {}
+
+@media (min-width:768px) and (max-width:991px) {
+    .about_pg1lilil span {
+        width: 25px;
+        height: 25px;
+        line-height: 25px;
+        font-size: 14px!important;
+    }
+    .about_pg1lilir h5 {
+        font-size: 14px;
+    }
+    .explore_1rilir h5 i {
+        font-size: 30px;
+    }
+    .about_pg2i1l .font_50 {
+        font-size: 30px;
+    }
+    .about_pg2i1r h6 {
+        font-size: 12px;
+    }
+    .profile1_inner1_inner_left {
+        margin-top: 0!important;
+    }
+    .profile1_inner1_inner_center {
+        margin-top: 0!important;
+    }
+}
+
+@media (min-width:992px) and (max-width:1200px) {
+    .about_pg1lilil span {
+        width: 35px;
+        height: 35px;
+        line-height: 35px;
+        font-size: 16px!important;
+    }
+    .about_pg1lilir h5 {
+        font-size: 16px;
+    }
+}
+
+@media (min-width:1201px) and (max-width:1300px) {}
+
+@media (min-width:1400px) and (max-width:2000px) {}

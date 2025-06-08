@@ -1,0 +1,128 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link href="{% static 'ajax_datatable/style.css' %}" rel="stylesheet" />
+{% comment %} <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"> {% endcomment %}
+
+<link rel="stylesheet" href="{% static 'vendor/libs/datatables-bs5/datatables.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css' %}" />
+
+{% comment %} 
+<link rel="stylesheet" href="{% static 'vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'vendors/css/tables/datatable/fixedcolumns.bootstrap5.css' %}">
+<link rel="stylesheet" href="{% static 'vendors/css/tables/datatable/fixedheader.bootstrap5.css' %}">
+<link rel="stylesheet" href="{% static 'vendors/css/forms/select/select2.min.css' %}">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="crossorigin=""/>
+{% endcomment %}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap4-duallistbox/dist/bootstrap-duallistbox.min.css">
+
+{% comment %} 
+  <style>
+    html.dark table.dataTable.cell-border>tbody>tr>th,html.dark table.dataTable.cell-border>tbody>tr>td {
+      border-top: 1px solid rgb(64, 67, 70);
+      border-right: 1px solid rgb(64, 67, 70)
+    }
+
+    html.dark table.dataTable.cell-border>tbody>tr>th:first-child,html.dark table.dataTable.cell-border>tbody>tr>td:first-child {
+      border-left: 1px solid rgb(64, 67, 70)
+    }
+
+    table.dataTable.cell-border>tbody>tr>th,table.dataTable.cell-border>tbody>tr>td {
+      border-top: 1px solid rgba(0, 0, 0, 0.15);
+      border-right: 1px solid rgba(0, 0, 0, 0.15)
+    }
+
+    table.dataTable.cell-border>tbody>tr>th:first-child,table.dataTable.cell-border>tbody>tr>td:first-child {
+      border-left: 1px solid rgba(0, 0, 0, 0.15)
+    }
+
+    table.dataTable.cell-border>tbody>tr:first-child>th,table.dataTable.cell-border>tbody>tr:first-child>td {
+      border-top: none
+    }
+  </style>
+{% endcomment %}
+
+<style>
+  html .content-wrapper .content-header-title {
+    font-weight: 500;
+    color: #636363;
+    padding-right: 1rem;
+    border-right: 1px solid #000000; /* #D6DCE1;*/
+    font-size: 1.414rem;
+    line-height: 1.2;
+    
+  }
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+  <div class="content-header row">
+    <div class="content-header-left col-md-9 col-12 my-2 mb-6">
+      <div class="row breadcrumbs-top">
+        <div class="col-12">
+          <h2 class="content-header-title float-start mb-0">{{ description }}</h2>
+          {% if bread_crumbs %}
+            <div class="breadcrumb-wrapper d-flex align-items-center h-100 ps-4">
+              <nav aria-label="breadcrumb mb-0">
+                <ol class="breadcrumb mb-0">
+                  {% for bc in bread_crumbs %}
+                  <li class="breadcrumb-item {% if not bc.url %}active{% endif %}">
+                    {% if bc.url %}<a href="{{ bc.url }}">{{ bc.name }}</a>{% else %}{{ bc.name }}{% endif %}
+                  </li>
+                  {% endfor %}
+                </ol>
+              </nav>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="card" id="tableSection" class="section" hx-get="{{ url }}" hx-trigger="load, initChanged from:body" hx-target="this">
+  </div>
+  <!-- Table -->
+</div>
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script type="text/javascript" src="{% static 'ajax_datatable/js/utils.js' %}"></script>
+<script src="{% static 'vendor/libs/datatables-bs5/datatables-bootstrap5.js' %}"></script>
+
+<script>
+  function toggleLicenseKey(id) {
+    let keyElement = document.getElementById(`license-key-${id}`);
+    let btnIcon = document.querySelector(`[data-id='${id}'] i`);
+
+    if (keyElement.style.display === "none") {
+        keyElement.style.display = "inline";
+        btnIcon.classList.remove("ti-eye");
+        btnIcon.classList.add("ti-eye-off");
+    } else {
+        keyElement.style.display = "none";
+        btnIcon.classList.remove("ti-eye-off");
+        btnIcon.classList.add("ti-eye");
+    }
+}
+</script>
+
+{% comment %} <script src="{% static 'vendors/js/tables/datatable/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'vendors/js/tables/datatable/datatables.buttons.min.js' %}"></script>
+<script src="{% static 'vendors/js/tables/datatable/dataTables.bootstrap5.min.js' %}"></script>
+<script src="{% static 'vendors/js/tables/datatable/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'vendors/css/tables/datatable/extensions/dataTables.fixedHeader.min.js' %}"></script>
+<script src="{% static 'vendors/js/tables/datatable/responsive.bootstrap5.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap4-duallistbox/dist/jquery.bootstrap-duallistbox.min.js"><script>
+<script src="{% static 'vendors/js/maps/leaflet.min.js' %}"></script>
+ {% endcomment %}
+{% comment %} <script src="{% static 'js/scripts/tables/table-datatables-advanced.min.js' %}"></script> {% endcomment %}
+{% endblock %}

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hospital Details</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    .hospital-banner {
+      height: 300px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 10px;
+    }
+    .rating-stars {
+      color: gold;
+    }
+    .section-title {
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body class="bg-light">
+
+  <div class="container mt-4 mb-5">
+
+    <!-- Hospital Banner & Basic Info -->
+    <div class="card shadow p-4">
+      <div class="row">
+        <div class="col-md-5">
+          <div class="hospital-banner" style="background-image: url('https://via.placeholder.com/600x300');"></div>
+        </div>
+        <div class="col-md-7">
+          <h2>Sunrise Multispecialty Hospital</h2>
+          <div class="rating-stars mb-2">
+            ★★★★☆ (4.5/5)
+          </div>
+          <p><strong>Address:</strong> 123 Health Lane, City Name, State - 123456</p>
+          <p><strong>Phone:</strong> +91 98765 43210</p>
+          <p><strong>Email:</strong> contact@sunrisehospital.com</p>
+          <a href="#appointment" class="btn btn-primary mt-2">Book Appointment</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overview -->
+    <div class="card shadow p-4 mt-4">
+      <h4 class="section-title">Overview</h4>
+      <p>
+        Sunrise Multispecialty Hospital is a state-of-the-art healthcare facility offering a wide range of medical services under one roof. Known for its experienced doctors, modern equipment, and patient-centric care, we are committed to delivering excellence in healthcare.
+      </p>
+    </div>
+
+    <!-- Services Offered -->
+    <div class="card shadow p-4 mt-4">
+      <h4 class="section-title">Services Offered</h4>
+      <ul class="row">
+        <li class="col-md-4">24x7 Emergency</li>
+        <li class="col-md-4">ICU / NICU</li>
+        <li class="col-md-4">Diagnostic Labs</li>
+        <li class="col-md-4">Pharmacy</li>
+        <li class="col-md-4">Ambulance Service</li>
+        <li class="col-md-4">In-patient & Out-patient Services</li>
+      </ul>
+    </div>
+
+    <!-- Departments -->
+    <div class="card shadow p-4 mt-4">
+      <h4 class="section-title">Departments</h4>
+      <div class="row">
+        <div class="col-md-4">Cardiology</div>
+        <div class="col-md-4">Orthopedics</div>
+        <div class="col-md-4">Neurology</div>
+        <div class="col-md-4">Pediatrics</div>
+        <div class="col-md-4">General Surgery</div>
+        <div class="col-md-4">Dermatology</div>
+      </div>
+    </div>
+
+    <!-- Doctors -->
+    <div class="card shadow p-4 mt-4">
+      <h4 class="section-title">Available Doctors</h4>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card p-3 mb-3">
+            <h5>Dr. Anjali Sharma</h5>
+            <p>Cardiologist - 12 yrs exp.</p>
+            <a href="#" class="btn btn-sm btn-outline-primary">View Profile</a>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card p-3 mb-3">
+            <h5>Dr. Rajiv Mehta</h5>
+            <p>Orthopedic Surgeon - 10 yrs exp.</p>
+            <a href="#" class="btn btn-sm btn-outline-primary">View Profile</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Facilities -->
+    <div class="card shadow p-4 mt-4">
+      <h4 class="section-title">Facilities</h4>
+      <ul class="row">
+        <li class="col-md-4">Cafeteria</li>
+        <li class="col-md-4">Parking</li>
+        <li class="col-md-4">Wheelchair Access</li>
+        <li class="col-md-4">ATM</li>
+      </ul>
+    </div>
+
+    <!-- Location -->
+    <div class="card shadow p-4 mt-4">
+      <h4 class="section-title">Location Map</h4>
+      <div class="ratio ratio-16x9">
+        <iframe
+          src="https://maps.google.com/maps?q=delhi%20hospital&t=&z=13&ie=UTF8&iwloc=&output=embed"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- Appointment Section -->
+    <div id="appointment" class="card shadow p-4 mt-4">
+      <h4 class="section-title">Book an Appointment</h4>
+      <form>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="fullname" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="fullname" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="contact" class="form-label">Contact Number</label>
+            <input type="text" class="form-control" id="contact" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="department" class="form-label">Department</label>
+            <select class="form-select" id="department">
+              <option>Cardiology</option>
+              <option>Orthopedics</option>
+              <option>Neurology</option>
+            </select>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="date" class="form-label">Preferred Date</label>
+            <input type="date" class="form-control" id="date" required>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-success">Submit Appointment</button>
+      </form>
+    </div>
+
+  </div>
+
+</body>
+</html>

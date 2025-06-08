@@ -1,0 +1,17 @@
+{% for field in fields %}
+  <div class="mb-3">
+    <label for="{{ field.id_for_label }}" class="form-label fw-semibold">{{ field.label }}</label>
+    {{ field }}
+    {% if field.help_text %}
+      <div class="form-text">{{ field.help_text }}</div>
+    {% endif %}
+    {% if field.errors %}
+      <div class="text-danger small">{{ field.errors|striptags }}</div>
+    {% endif %}
+  </div>
+{% endfor %}
+
+<script>
+  // Reveal the register button when fields load
+  document.getElementById("register-button-container")?.classList.remove("d-none");
+</script>

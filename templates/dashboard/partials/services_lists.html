@@ -1,0 +1,12 @@
+
+<div class="d-flex justify-content-between align-items-center section-title" >
+    <h4>Services Offered</h4>
+    <button class="btn btn-sm btn-primary" hx-get="{% url 'add_hospital_services' hospital.id %}" hx-target="#modal-content" hx-trigger="click" data-bs-toggle="modal" data-bs-target="#modal">+ Add Service</button>
+  </div>
+  <div id="hospital-services-list">
+  <ul class="row">
+{% for s in services %}
+<li class="col-md-4" style="cursor: pointer;" hx-get="{% url 'edit_hospital_services' hospital.id s.id %}" hx-target="#modal-content" hx-trigger="click" data-bs-toggle="modal" data-bs-target="#modal" >{{s.service_name}}</li>
+{% endfor %}
+  </ul>
+  </div>

@@ -1,0 +1,328 @@
+{% load static %}
+<!doctype html>
+
+<html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed layout-compact" dir="ltr" data-theme="theme-default" data-assets-path="/static/" data-template="vertical-menu-template" data-style="light">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="description" content="" />
+
+    <title>{% if title %}{{ title }}{% else %}Schedly Admin Dashboard{% endif %}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'main/img/logo/schedly-logo-2.png'  %}"/>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&ampdisplay=swap" rel="stylesheet" />
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="{% static 'vendor/fonts/fontawesome.css' %}" />
+    <link rel="stylesheet" href="{% static 'vendor/fonts/tabler-icons.css' %}" />
+    <link rel="stylesheet" href="{% static 'vendor/fonts/flag-icons.css' %}" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="{% static 'vendor/css/core.css' %}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{% static 'vendor/css/theme-default.css' %}" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{% static 'css/demo.css' %}" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="{% static 'vendor/libs/node-waves/node-waves.css' %}" />
+    <link rel="stylesheet" href="{% static 'vendor/libs/perfect-scrollbar/perfect-scrollbar.css' %}" />
+    <link rel="stylesheet" href="{% static 'vendor/libs/typeahead-js/typeahead.css' %}" />
+    <link rel="stylesheet" href="{% static 'vendor/libs/toastr/toastr.css' %}" />
+    <link rel="stylesheet" href="{% static 'vendor/libs/sweetalert2/sweetalert2.css' %}" />
+    <link rel="stylesheet" href="{% static 'vendor/libs/select2/select2.css' %}" />
+
+    
+
+
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="{% static 'vendor/css/pages/cards-advance.css' %}" />
+
+    <!-- Bootstrap Dual Listbox CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap4-duallistbox/dist/bootstrap-duallistbox.min.css">
+
+
+ 
+
+    {% block extra_css %}
+    {% endblock %}
+
+    <!-- Helpers -->
+    <script src="{% static 'vendor/js/helpers.js' %}"></script>
+
+    {% comment %}
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+
+    <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
+    <script src="{% static 'vendor/js/template-customizer.js' %}"></script>
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    {% endcomment %}
+
+    <script src="{% static 'vendor/js/template-customizer.js' %}"></script>
+    <script src="{% static 'js/config.js' %}"></script>
+</head>
+
+<body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+
+        <!-- Menu -->
+        {% include "dashboard/plugins/sidebar.html" %}
+        <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+          <!-- Navbar -->
+          {% include "dashboard/plugins/header.html" %}
+          <!-- / Navbar -->
+
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+            <div class="white-container">
+            <!-- / Content -->
+              {% block content %}
+              {% endblock content %}
+            </div>
+            <!-- / Content -->
+
+            <!-- Footer -->
+            {% include "dashboard/plugins/footer.html" %}
+            <!-- Footer -->
+
+            <div class="content-backdrop fade"></div>
+          </div>
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout container -->
+        
+      </div>
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+
+      <!-- Drag Target Area To SlideIn Menu On Small Screens -->
+      <div class="drag-target"></div>
+    </div>
+    <!-- / Layout wrapper -->
+
+    <div class="modal fade text-start" id="modal" tabindex="-1" aria-labelledby="myModalLabel18" style="display: none;" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" id="modal-content">
+          
+          <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel18">Default Modal</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  
+    <div class="modal fade text-start" id="modal-lg" tabindex="-1" aria-labelledby="myModalLabel17" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content" id="modal-content-lg">
+            
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel17">Large Modal</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body"></div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
+                Close
+              </button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    
+    <div class="modal fade text-start" id="modal-xlarge" tabindex="-1" aria-labelledby="myModalLabel16" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content" id="modal-content-xlarge">
+
+          <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel16">Extra Large Modal</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          
+          <div class="modal-body"></div>
+          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
+      <div class="offcanvas-header">
+        <h5 id="offcanvasLabel" class="offcanvas-title">Offcanvas End</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body my-auto mx-0 flex-grow-0">
+        <p class="text-center">
+          Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print,
+          graphic or web designs. The passage is attributed to an unknown typesetter in the 15th
+          century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum
+          for use in a type specimen book.
+        </p>
+        <button type="button" class="btn btn-primary mb-2 d-grid w-100">Continue</button>
+        <button type="button" class="btn btn-label-secondary d-grid w-100" data-bs-dismiss="offcanvas">
+          Cancel
+        </button>
+      </div>
+    </div>
+
+    <!-- Core JS -->
+    <!-- build:js assetsvendor/js/core.js -->
+    <script src="{% static 'vendor/libs/jquery/jquery.js' %}"></script>
+    
+    <script src="https://unpkg.com/htmx.org@2.0.4/dist/htmx.js"></script>
+
+    <script src="{% static 'vendor/libs/popper/popper.js' %}"></script>
+    <script src="{% static 'vendor/js/bootstrap.js' %}"></script>
+    <script src="{% static 'vendor/libs/node-waves/node-waves.js' %}"></script>
+    <script src="{% static 'vendor/libs/perfect-scrollbar/perfect-scrollbar.js' %}"></script>
+    <script src="{% static 'vendor/libs/hammer/hammer.js' %}"></script>
+    <script src="{% static 'vendor/libs/i18n/i18n.js' %}"></script>
+    <script src="{% static 'vendor/libs/typeahead-js/typeahead.js' %}"></script>
+    <script src="{% static 'vendor/js/menu.js' %}"></script>
+
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+    <script src="{% static 'vendor/libs/sweetalert2/sweetalert2.js' %}"></script>
+    <script src="{% static 'vendor/libs/toastr/toastr.js' %}"></script>
+
+
+    <!-- Main JS -->
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <!-- jQuery (Required for Bootstrap Dual Listbox) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap JS (if not included already) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Bootstrap Dual Listbox JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap4-duallistbox/dist/jquery.bootstrap-duallistbox.min.js"></script>
+
+
+    <script>
+      toastr.options = {
+				"closeButton": true,
+				"debug": false,
+				"newestOnTop": true,
+				"progressBar": true,
+				"positionClass": "toast-top-right",
+				"preventDuplicates": false,
+				"onclick": null,
+				"showDuration": "300",
+				"hideDuration": "1000",
+				"timeOut": "2000",
+				"extendedTimeOut": "1000",
+				"showEasing": "swing",
+				"hideEasing": "linear",
+				"showMethod": "fadeIn",
+				"hideMethod": "fadeOut"
+			  }
+          
+      document.body.addEventListener("showToast", function (evt) { 
+
+        if (evt.detail.level === "success") {
+          toastr.success(evt.detail.message, {timeOut: 8000});
+        }
+        if (evt.detail.level === "error") {
+          toastr.error(evt.detail.message, {timeOut: 8000});
+        }
+        if (evt.detail.level === "warning") {
+          toastr.warning(evt.detail.message, {timeOut: 8000});
+        }
+      })
+    </script>
+
+    <script>
+        document.body.addEventListener("tableChanged", function(evt){
+            $.fn.dataTable.tables({
+                api: true
+            }).draw();
+         })
+    </script>
+
+    <script>
+      document.body.addEventListener("showMessage", function (evt) {
+        Swal.fire({
+          html: evt.detail.message,
+          title: evt.detail.title,
+          //text: evt.detail.message,
+          icon: evt.detail.level,
+          buttonsStyling: false,
+          confirmButtonText: "Ok, got it!",
+          customClass: {
+            confirmButton: "btn btn-primary"
+          }
+        });
+        $('.modal').modal('hide');
+      })
+
+      document.body.addEventListener("closeModal", function (evt) {
+        $('.modal').modal('hide');
+      })
+
+
+      document.addEventListener('DOMContentLoaded', function () {
+          var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+          var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+              return new bootstrap.Tooltip(tooltipTriggerEl)
+          })
+      }, false);
+    </script>
+
+    <!-- Page JS -->
+    {% block extra_js %}
+    {% endblock %}
+
+    {% comment %}
+    <script>
+      $(window).on('load', function() {
+          if (feather) {
+              feather.replace({
+                  width: 14,
+                  height: 14
+              });
+          }
+      })
+      document.body.addEventListener('htmx:afterSettle', (event) => {
+          if (feather) {
+              feather.replace({
+                  width: 14,
+                  height: 14
+              });
+          }
+      })
+    </script>
+    {% endcomment %}
+</body>
+</html>

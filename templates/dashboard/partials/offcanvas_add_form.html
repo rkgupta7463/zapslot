@@ -1,0 +1,224 @@
+{% load static %}
+{{ form.media.css }}
+
+<style>
+</style>
+{% if config.select2 %}
+<style>
+  .select2-container{
+    width: 100% !important;
+  }
+</style>
+{% endif %}
+
+
+<div class="modal-header">
+  <h4 class="modal-title" id="myModalLabel1">{% if title %} {{ title }} {% else %} Form {% endif %}</h4>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+
+<div class="modal-body">
+  <form id="form-hx" class="form form-horizontal" enctype="multipart/form-data" hx-encoding='multipart/form-data' hx-post="{% if postUrl %}{{ postUrl }}{% else %}{{ request.path }}{% endif %}" hx-headers='{"X-CSRFToken":"{{ csrf_token }}"}' hx-target="#modal-content" hx-trigger="callform, submit">
+    <div class="row">
+      {% csrf_token %}
+      {% if form.errors %}
+      <div class="alert alert-danger">
+          <h4 class="alert-heading">Error</h4>
+          <p>{{ form.non_field_errors|first }}</p>
+      </div>
+      {% endif %}
+      {% for field in form %}
+          <div class="col-12">
+            <div class="mb-1 row">
+            {% if not field.is_hidden %}
+              <div class="col-sm-3">
+                  <label class="col-form-label" for="{{ form.title.id_for_label }}">{{ field.label }}</label>
+              </div>
+            {% endif %}
+              <div class="col-sm-9">
+                {{ field }}
+                {% if field.help_text %}
+                <p><small class="">{{ field.help_text }}</small></p>
+                {% endif %}
+                {% if field.errors %}
+                <div class="invalid-feedback" style="display: block !important">
+                    <i class="bx bx-radio-circle"></i>
+                    {{ field.errors }}
+                </div>
+                {% endif %}
+              </div>
+            
+            </div>
+          </div>
+      {% endfor %}
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-label-secondary waves-effect" data-bs-dismiss="modal">
+    Close
+  </button>
+  <button type="submit" form="form-hx" class="btn btn-primary waves-effect waves-float waves-light">Accept</button>
+</div>
+
+{% comment %} <script src="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js"></script> {% endcomment %}
+
+
+{% if config.isConfirm %}
+<script>
+  document.body.addEventListener('htmx:confirm', function(evt) {
+    console.log(evt.detail.verb)
+    if (evt.detail.verb !== 'get') {
+      evt.preventDefault();
+
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'You are about to submit the form',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, submit it!',
+        cancelButtonText: 'Cancel'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          evt.detail.issueRequest();
+        } else {
+          $('#modal').modal('hide');
+        }
+      });
+    }
+});
+</script>
+{% endif %}
+
+{% if config.select2 %}
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $('#modal select').attr("data-dropdown-parent","#modal")
+</script>
+{% endif %}
+
+{{ form.media.js }}
+<script>
+  $(document).ready(function() {
+    $('.close').click(function(e) {
+        e.preventDefault();
+        $('#modal').modal('hide');
+    });
+  });
+
+  {% comment %} document.addEventListener('htmx:afterRequest', function(evt) {
+    if (evt.detail.requestConfig.verb  !== 'get') { // check if it's a form submission
+      const response = evt.detail.xhr;
+      if (response.status  ===  204) { // form submission was successful
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Your form has been submitted successfully.'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $('#modal').modal('hide');
+            {% if config.dataTable %}
+              $('#datatable_permissions').DataTable().ajax.reload(null, false);
+            {% endif %}
+
+            //location.reload();
+          } else {
+            $('#modal').modal('hide');
+          }
+        });
+      } else { // form submission failed
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'There was an error processing your form submission.'
+        }).then(() => {
+          console.log("Form has error")
+          //$('#modal').modal('hide');
+        });
+      }
+    }
+  }); {% endcomment %}
+  
+</script>
+
+{% comment %} <script>
+
+document.querySelectorAll('.coloris').forEach(input => {
+  input.addEventListener('click', e => {
+    Coloris({
+      theme: 'polaroid',
+      //el: '.coloris',
+      parent: '.modal-body',
+      closeButton: true,
+      clearButton: true,
+      defaultColor: "#15b3e3",
+      swatchesOnly: true,
+      wrap: true,
+      swatches: [
+            '#c0c0c0', // Silver
+            '#808080', // Gray
+            '#000000', // Black
+            '#800000', // Maroon
+            '#a52a2a', // Brown
+            '#ff0000', // Red
+            '#ffa500', // Orange
+            '#ffd700', // Gold
+            '#ffff00', // Yellow
+            '#ffdab9', // Peach
+            '#f0e68c', // Khaki
+            '#808000', // Olive
+            '#00ff00', // Lime
+            '#9acd32', // Jelly
+            '#008000', // Green
+            '#008080', // Teal
+            '#00ffff', // Aqua
+            '#add8e6', // LightBlue
+            '#00bfff', // DeepSky
+            '#1e90ff', // Dodger
+            '#0000ff', // Blue
+            '#000080', // Navy
+            '#800080', // Purple
+            '#ff00ff', // Fuchsia
+            '#ee82ee', // Violet
+            '#ffe4e1', // Rose
+            '#E6E6FA'  // Lavender
+      ],
+    });
+  });
+});
+</script> {% endcomment %}
+{% comment %} 
+<script>
+$(".flatpickr").flatpickr(
+  {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+  }
+  );
+</script>
+{% endcomment %}
+
+
+
+{% if config.selectMultiple %}
+<script>
+  var demo1 = $('#{{config.selectMultiple}}').bootstrapDualListbox();
+</script>
+
+{% endif %}
+<script>
+
+  $('#id_data_type').on('select2:select', function (e) {
+    event.preventDefault();
+    var form = document.getElementById('form-hx');
+    var inputs = form.querySelectorAll('input[required]');
+    inputs.forEach(function(input) {
+        input.removeAttribute('required');
+    });
+    form.noValidate = true;
+    htmx.trigger('#form-hx', 'callform');
+  });
+
+</script>

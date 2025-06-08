@@ -1,0 +1,228 @@
+{% load static %}
+{{ form.media.css }}
+{{ form.media.js }}
+
+
+<div class="card-header border-bottom d-flex align-items-center justify-content-between">
+    <h5 class="card-title mb-0">{{ table_title }}</h5>
+    <div class="d-flex justify-content-between align-items-center row gap-4 gap-md-0">
+        <div class="">
+            {% if filterForm %}
+            <button type="button" class="btn rounded-pill btn-icon btn-primary waves-effect waves-light d-inline-block overflow-visible" data-bs-toggle="modal" data-bs-target="#filterModal">
+                    <span class="ti ti-search ti-md"></span>
+                    <span class="badge rounded-pill bg-danger text-white badge-notifications">{{ filled_fields }}</span>
+            </button>
+            {% endif %}
+
+            {% if import_button or export_button or export_history %}
+            <div class="btn-group" role="group" aria-label="Group Button">
+                {% if import_button %}
+                <button type="button" class="btn btn-outline-secondary waves-effect" hx-get="{{ import_button.url }}" hx-target="#modal-content" data-bs-toggle="modal" data-bs-target="#modal">
+                    {{ import_button.icon | safe }}{{ import_button.text }}
+                </button>
+                {% endif %}
+                {% if export_button %}
+                <button type="button" class="btn btn-outline-secondary waves-effect" hx-get="{{ export_button.url }}" hx-target="#modal-content" data-bs-toggle="modal" data-bs-target="#modal">
+                    {{ export_button.icon | safe }}{{ export_button.text }}
+                </button>
+                {% endif %}
+                {% if export_history %}
+                <button type="button" class="btn btn-outline-secondary waves-effect" hx-get="{{ export_history.url }}" hx-target="#modal-content-lg" data-bs-toggle="modal" data-bs-target="#modal-lg">
+                    {{ export_history.icon | safe }}{{ export_history.text }}
+                </button>
+                {% endif %}
+            </div>
+            {% endif %}
+
+
+            {% if center_button %}
+            <a href="{{ center_button.url }}">
+                <button type="button" class="btn btn-label-primary waves-effect">{{ center_button.icon | safe }}{{ center_button.text }}</button>
+            </a>
+            {% endif %}
+            
+
+            <div class="btn-group">
+                {% if hx_add_button or add_button %}
+                <button type="button"  class="btn btn-outline-primary dropdown-toggle waves-effect" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="dropdownMenuButton101">
+                    Action
+                </button>
+                <ul class="dropdown-menu" style="">
+                    {% if hx_add_button %}
+                        {% for hx_button in hx_add_button %}
+                            <li><a class="dropdown-item waves-effect" hx-get="{{ hx_button.url }}" hx-target="{% if hx_button.hx_target %}{{ hx_button.hx_target }}{% else %}#modal-content{% endif %}" data-bs-toggle="{% if hx_button.bs_toggle %}{{ hx_button.bs_toggle }}{% else %}modal{% endif %}" data-bs-target="{% if hx_button.modal_target %}{{ hx_button.modal_target }}{% else %}#modal{% endif %}">{{ hx_button.icon | safe }}{{ hx_button.text }}</a></li>
+                        {% endfor %}
+                    {% endif %}
+                    
+                    {% if add_button %}
+                        {% for button in add_button %}
+                            <li><a class="dropdown-item waves-effect" href="{{ button.url }}">{{ button.icon | safe }}{{ button.text }}</a></li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+  
+<div class="card-datatable table-responsive">
+    <table id="datatable_permissions" class="table table-bordered ">
+    </table>
+</div>
+
+<div class="modal fade text-start" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+    <div id="filter-modal-content"  class="modal-content">
+        <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel18">{% if filterForm.title %}{{ filterForm.title }}{% else %}Edit{% endif %}</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form id="filter-form-hx" class="form form-horizontal" hx-get="{{ request.path }}" hx-target="#tableSection" hx-swap="innerHTML">
+                <div class="row">
+                    {% if filterForm.form.errors %}
+                    <div class="alert alert-danger">
+                        <h4 class="alert-heading">Error</h4>
+                        <p>{{ filterForm.form.non_field_errors|first }}</p>
+                    </div>
+                    {% endif %}
+        
+                {% for field in filterForm.form %}
+                <div class="col-12">
+                    <div class="mb-1 row">
+                        {% if not field.is_hidden %}
+                            <div class="col-sm-3">
+                                <label class="col-form-label" for="{{ form.title.id_for_label }}">{{ field.label }}</label>
+                            </div>
+                        {% endif %}
+                        <div class="col-sm-9">
+                            {{ field }}
+                        </div>
+                        {% comment %} <p><small class="text-muted">Find helper text here for given textbox.</small></p> {% endcomment %}
+        
+                        {% if field.errors %}
+                            <div class="invalid-feedback" style="display: block !important">
+                                <i class="bx bx-radio-circle"></i>
+                                {{ field.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary waves-effect waves-float waves-light" data-bs-dismiss="modal">Accept</button>
+            {% comment %}
+            <button type="button" class="btn" data-bs-dismiss="modal" >
+            <i class="bx bx-x d-block d-sm-none"></i>
+            <span class="d-none d-sm-block">Close</span>
+            </button>
+        
+            <button id="btn-submit" type="submit" form="filter-form-hx" class="btn btn-submit ms-1" >
+                <i class="bx bx-check d-block d-sm-none"></i>
+                <span class="d-none d-sm-block">Accept</span>
+            </button>
+            {% endcomment %}
+        </div>
+    </div>
+    </div>
+</div>
+
+{{ filterForm.form.media.js }}
+<script language="javascript">
+
+    $(document).ready(function () {
+        $.fn.dataTableExt.oStdClasses.sWrapper = "dataTables_wrapper dt-bootstrap5 no-footer";
+        AjaxDatatableViewUtils.initialize_table(
+            $('#datatable_permissions'),
+
+            "{{ url | safe }}",
+            {
+                // extra_options (example)
+                //responsive: true,
+                //processing: true,
+                autoWidth: true,
+                full_row_select: false,
+                scrollX: true,
+                fixedHeader: true,
+                pagingType: 'simple_numbers',
+
+                //info: false,
+                //fixedColumns:   {
+                //    left: 2,
+                //right: 1
+                //},
+
+                //dom: "<'d-flex justify-content-between align-items-center mx-0 row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" + "tr" + "<'d-flex justify-content-between mx-0 row'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'p>>",
+                dom:
+                '<"row"' +
+                '<"col-md-2"<"ms-n2"l>>' +
+                '<"col-md-10"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-6 mb-md-0 mt-n6 mt-md-0"f>>' +
+                '>t' +
+                '<"row"' +
+                '<"col-sm-12 col-md-6"i>' +
+                '<"col-sm-12 col-md-6"p>' +
+                '>',
+
+                rowCallback: function (row, data, displayNum, displayIndex, dataIndex) {
+                    var serialNum = this.api().page.info().start + displayIndex + 1;
+                    $('td', row).each(function () {
+                        $(this).wrapInner('<span class=""/>');
+                        htmx.process(this);
+                    });
+                    $('td.sn-no', row).html(serialNum);
+                },
+
+
+                headerCallback: function (thead, data) {
+                    $(thead).parent().addClass('bg-gray-100 dark:bg-gray-700');
+                    $('thead input').addClass('form-control');
+                    $('.dataTables_filter input').addClass('form-control');
+                    //$('#datatable_permissions_wrapper select').select2({
+                        //multiple: true,
+                    //});
+                },
+                initComplete: function(settings, json) {
+                    $(this.api().table().container()).find('.datatable-column-filter-row input').addClass('form-control form-control-solid');
+                    $(this.api().table().container()).find('.datatable-column-filter-row select').addClass('form-control form-control-solid form-select');
+                    $(this.api().table().container()).find('.datatable-column-filter-row select').attr('data-control', "select2");
+                  },
+                  
+                drawCallback: function () {
+
+                    const dtScroll = new PerfectScrollbar('.dataTables_scrollBody');
+                    //feather.replace()
+
+                },
+
+                
+                language: {
+                    //search: '<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"><svg class="w-1 h-1 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg></div>',
+                    searchPlaceholder: "Search",
+                    //info: "<span class='text-sm font-normal text-gray-500 dark:text-gray-400'>Shoing <span class='font-semibold text-gray-900 dark:text-white'>_START_ - _END_</span> of <span class='font-semibold text-gray-900 dark:text-white'>_TOTAL_</span></span>",
+                    //paginate: {
+                    //    next: '→',
+                    //    previous: '←'
+                    //next: '<svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>', // or '→'
+                    //previous: '<svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>' // or '←'
+                    //}
+                    //paginate: {
+                    //    next: '<i class="ti ti-chevron-right ti-sm"></i>',
+                    //    previous: '<i class="ti ti-chevron-left ti-sm"></i>'
+                    //},
+                },
+            }, {
+            // extra_data
+            // ...
+        },
+
+        );
+    });
+
+    
+
+</script>
+

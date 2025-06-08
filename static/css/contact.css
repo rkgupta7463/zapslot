@@ -1,0 +1,70 @@
+/*
+Template Name: Cricket Club
+File: Layout CSS
+Author: TemplatesOnWeb
+Author URI: https://www.templateonweb.com/
+Licence: <a href="https://www.templateonweb.com/license">Website Template Licence</a>
+*/
+
+/*********************contact****************/
+.center_contact {
+    background-image: url(../image/41.jpg);
+    background-position: center center;
+    background-size: cover;
+}
+.contact_1ril span{
+	border:1px solid var(--border_light); 
+	width:70px;
+	height:70px;
+	line-height:70px; 
+ }
+/*********************contact_end****************/
+
+
+@media screen and (max-width : 767px){
+.contact_1l {
+	text-align:center;
+ }
+.contact_1lil{
+	margin-top:10px; 
+ }
+.form-check{
+	text-align:left; 
+ }
+.contact_1r{
+	margin-top:15px; 
+ }
+.contact_1r h3{
+	text-align:center;
+ }
+.contact_1r h4{
+	text-align:center;
+ }
+.contact_1r ul{
+	text-align:center;
+ }
+.contact_1ril {
+	margin-top:8px;
+	margin-bottom:8px; 
+ }
+ }
+
+@media (min-width:576px) and (max-width:767px) {
+
+ }
+@media (min-width:768px) and (max-width:991px) {
+.social_tag li{
+	margin-top:3px;
+	margin-bottom:3px; 
+ }
+ }
+
+@media (min-width:992px) and (max-width:1200px) {
+.social_tag li{
+	margin-top:3px;
+	margin-bottom:3px; 
+ }
+ }
+
+
+

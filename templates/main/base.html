@@ -1,0 +1,71 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Schedly</title>
+    <link rel="icon" href="{% static 'main/img/logo/zapslot.jpg'%}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'main/css/bootstrap.min.css' %}">
+    <!-- animate CSS -->
+    <link rel="stylesheet" href="{% static 'main/css/animate.css' %}">
+    <!-- owl carousel CSS -->
+    <link rel="stylesheet" href="{% static 'main/css/owl.carousel.min.css' %}">
+    <!-- themify CSS -->
+    <link rel="stylesheet" href="{% static 'main/css/themify-icons.css' %}">
+    <!-- flaticon CSS -->
+    <link rel="stylesheet" href="{% static 'main/css/flaticon.css' %}">
+    <!-- magnific popup CSS -->
+    <link rel="stylesheet" href="{% static 'main/css/magnific-popup.css' %}">
+    <!-- nice select CSS -->
+    <link rel="stylesheet" href="{% static 'main/css/nice-select.css' %}">
+    <!-- swiper CSS -->
+    <link rel="stylesheet" href="{% static 'main/css/slick.css' %}">
+    <!-- style CSS -->
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+
+    <style>
+        .main_menu{
+            background-color: #ffffff;
+        }
+    </style>
+    {% block extra_css %}{% endblock  %}
+</head>
+
+<body>
+
+    {% include "main/plugins/header.html" %}
+
+    {% block content %}{% endblock  %}
+    
+    <!-- footer part start-->
+    {% include "main/plugins/footer.html" %}
+    <!-- footer part end-->
+
+    <!-- jquery plugins here-->
+
+    <script src="{% static 'main/js/jquery-1.12.1.min.js' %}"></script>
+    <!-- popper js -->
+    <script src="{% static 'main/js/popper.min.js' %}"></script>
+    <!-- bootstrap js -->
+    <script src="{% static 'main/js/bootstrap.min.js' %}"></script>
+    <!-- owl carousel js -->
+    <script src="{% static 'main/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'main/js/jquery.nice-select.min.js' %}"></script>
+    <!-- contact js -->
+    <script src="{% static 'main/js/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{% static 'main/js/jquery.form.js' %}"></script>
+    <script src="{% static 'main/js/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'main/js/mail-script.js' %}"></script>
+    <script src="{% static 'main/js/contact.js' %}"></script>
+    <!-- custom js -->
+    <script src="{% static 'main/js/custom.js' %}"></script>
+    {% block extra_js %}{% endblock  %}
+</body>
+
+</html>

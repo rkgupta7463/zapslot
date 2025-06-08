@@ -1,0 +1,189 @@
+{% load static %}
+
+{% if config.select2 %}
+<style>
+/* Match Select2 dropdowns with transparent input fields */
+
+.select2-container--default .select2-selection--single {
+  background-color: transparent !important;
+  border: 1px solid #fff !important;
+  border-radius: 0 !important;
+  height: 48px !important;
+  padding: 0.375rem 0.75rem;
+  color: #fff !important;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+/* Arrow fix for transparent look */
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+}
+
+/* Rendered (selected) text styling */
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: #fff !important;
+  line-height: 1.5;
+  padding-left: 0;
+}
+
+/* Dropdown menu background */
+.select2-container--default .select2-dropdown {
+  background-color: #fff;
+  color: #000;
+  border-radius: 0;
+  border: 1px solid #fff;
+}
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+  color: #fff;
+}
+</style>
+{% endif %}
+
+{{ form.media }}
+<div class="modal-header">
+  <h4 class="modal-title" id="myModalLabel1">{% if title %} {{ title }} {% else %} Form {% endif %}</h4>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+
+<div class="modal-body">
+  <form id="form-hx" class="form form-horizontal" enctype="multipart/form-data" hx-encoding='multipart/form-data' hx-post="{% if postUrl %}{{ postUrl }}{% else %}{{ request.path }}{% endif %}" hx-headers='{"X-CSRFToken":"{{ csrf_token }}"}' hx-target="#modal-content" hx-trigger="callform, submit" hx-on::after-request="this.reset()">
+    <div class="row">
+      {% csrf_token %}
+      {% if form.errors %}
+      <div class="alert alert-danger">
+          <h4 class="alert-heading">Error</h4>
+          <p>{{ form.non_field_errors|first }}</p>
+      </div>
+      {% endif %}
+      {% for field in form %}
+          <div class="col-12">
+            <div class="mb-1 row">
+            {% if not field.is_hidden %}
+              <div class="col-sm-3">
+                  <label class="col-form-label" for="{{ form.title.id_for_label }}">{{ field.label }}</label>
+              </div>
+            {% endif %}
+              <div class="col-sm-9">
+                {{ field }}
+                {% if field.help_text %}
+                <p><small class="">{{ field.help_text }}</small></p>
+                {% endif %}
+                {% if field.errors %}
+                <div class="invalid-feedback" style="display: block !important">
+                    <i class="bx bx-radio-circle"></i>
+                    {{ field.errors }}
+                </div>
+                {% endif %}
+              </div>
+            
+            </div>
+          </div>
+      {% endfor %}
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn" data-bs-dismiss="modal" >
+    <i class="bx bx-x d-block d-sm-none"></i>
+    <span class="d-none d-sm-block">Close</span>
+  </button>
+  <button type="submit" form="form-hx" class="btn btn-primary waves-effect waves-float waves-light">Accept</button>
+</div>
+
+{% if config.isConfirm %}
+<script>
+  document.body.addEventListener('htmx:confirm', function(evt) {
+    console.log(evt.detail.verb)
+    if (evt.detail.verb !== 'get') {
+      evt.preventDefault();
+
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'You are about to submit the form',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, submit it!',
+        cancelButtonText: 'Cancel'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          evt.detail.issueRequest();
+        } else {
+          $('#modal').modal('hide');
+        }
+      });
+    }
+});
+</script>
+{% endif %}
+
+{% if config.select2 %}
+<script>
+    $('#modal select').attr("data-dropdown-parent","#modal")
+</script>
+{% endif %}
+
+<script>
+  $(document).ready(function() {
+    $('.close').click(function(e) {
+        e.preventDefault();
+        $('#modal').modal('hide');
+    });
+  }); 
+</script>
+
+
+{% if config.selectMultiple %}
+<script>
+  var demo1 = $('#{{config.selectMultiple}}').bootstrapDualListbox();
+</script>
+
+{% endif %}
+<script>
+
+  $('#id_data_type').on('select2:select', function (e) {
+    event.preventDefault();
+    var form = document.getElementById('form-hx');
+    var inputs = form.querySelectorAll('input[required]');
+    inputs.forEach(function(input) {
+        input.removeAttribute('required');
+    });
+    form.noValidate = true;
+    htmx.trigger('#form-hx', 'callform');
+  });
+
+</script>
+
+<script>
+  {% comment %} document.addEventListener('DOMContentLoaded', function() { {% endcomment %}
+      // Get the form element
+      var form = document.getElementById('form-hx');
+
+      // Add event listener for normal form submission
+      form.addEventListener('submit', function () {
+          for (let instanceName in CKEDITOR.instances) {
+              if (CKEDITOR.instances.hasOwnProperty(instanceName)) {
+                  console.log(`Syncing CKEditor: ${instanceName}`);
+                  CKEDITOR.instances[instanceName].updateElement();
+              }
+          }
+      });
+      
+      // Also sync before HTMX submission
+      document.body.addEventListener('htmx:beforeSend', function (evt) {
+          if (evt.detail.elt === form) {
+              for (let instanceName in CKEDITOR.instances) {
+                  if (CKEDITOR.instances.hasOwnProperty(instanceName)) {
+                      CKEDITOR.instances[instanceName].updateElement();
+                  }
+              }
+          }
+      });
+      
+  {% comment %} }); {% endcomment %}
+  </script>

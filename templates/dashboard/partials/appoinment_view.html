@@ -1,0 +1,194 @@
+{% load static %} {% if config.select2 %}
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    th,
+    td {
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+    }
+    
+    th {
+        background-color: #4CAF50;
+        color: white;
+    }
+    
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+    
+    .confirmed {
+        color: green;
+        font-weight: bold;
+    }
+    
+    .pending {
+        color: orange;
+        font-weight: bold;
+    }
+</style>
+
+{% endif %} {{ form.media }}
+<div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel1">
+        {% if title %} {{ title }} {% else %} Appointment Details {% endif %}
+    </h4>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<hr style="width:100%;text-align:left;margin-left:0">
+
+<div class="modal-body">
+    <div class="row">
+        <div class="col-12 mb-2">
+            <strong>Booking Reference No.:</strong> {{appoinment.booking_reference}}
+        </div>
+        <div class="col-12 mb-2">
+            <strong>Name:</strong> {{appoinment.name}}
+        </div>
+        <div class="col-12 mb-2">
+            <strong>Email:</strong> {{appoinment.email}}
+        </div>
+        <div class="col-12 mb-2">
+            <strong>Contact Number:</strong> {{appoinment.phone}}
+        </div>
+        <div class="col-12 mb-2">
+            <strong>Hospital:</strong> {{appoinment.hospital.name}}
+        </div>
+        <div class="col-12 mb-2">
+            <strong>Services:</strong> {{appoinment.services.service_name}}
+        </div>
+        <div class="col-12 mb-2">
+            <strong>Appointment Date:</strong> {{appoinment.appointment_date}}
+        </div>
+        <div class="col-12 mb-2">
+            <strong>Time Slot:</strong> {{appoinment.timeslot}}
+        </div>
+        <div class="col-12 mb-2">
+            <strong>Status:</strong> 
+            <span class="fw-bold 
+                {% if appoinment.status == 1 %}
+                text-warning
+                {% elif appoinment.status == 2 %}
+                text-success
+                {% elif appoinment.status == 3 %}
+                text-danger
+                {% elif appoinment.status == 4 %}
+                text-secondary
+                {% endif %}
+            ">{{ appoinment.get_status_display }}</span>
+            </div>
+        </div>
+        <div class="col-12 mb-2">
+            <strong>Symptoms:</strong> {% if appoinment.symptoms %}{{appoinment.symptoms}} {% else %}No Symptoms{% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+    <i class="bx bx-x d-block d-sm-none"></i>
+    <span class="d-none d-sm-block">Close</span>
+  </button>
+</div>
+
+{% if config.isConfirm %}
+<script>
+    document.body.addEventListener('htmx:confirm', function(evt) {
+        console.log(evt.detail.verb)
+        if (evt.detail.verb !== 'get') {
+            evt.preventDefault();
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You are about to submit the form',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, submit it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    evt.detail.issueRequest();
+                } else {
+                    $('#modal').modal('hide');
+                }
+            });
+        }
+    });
+</script>
+{% endif %} {% if config.select2 %}
+<script>
+    $('#modal select').attr("data-dropdown-parent", "#modal")
+</script>
+{% endif %}
+
+<script>
+    $(document).ready(function() {
+        $('.close').click(function(e) {
+            e.preventDefault();
+            $('#modal').modal('hide');
+        });
+    });
+</script>
+
+
+{% if config.selectMultiple %}
+<script>
+    var demo1 = $('#{{config.selectMultiple}}').bootstrapDualListbox();
+</script>
+
+{% endif %}
+<script>
+    $('#id_data_type').on('select2:select', function(e) {
+        event.preventDefault();
+        var form = document.getElementById('form-hx');
+        var inputs = form.querySelectorAll('input[required]');
+        inputs.forEach(function(input) {
+            input.removeAttribute('required');
+        });
+        form.noValidate = true;
+        htmx.trigger('#form-hx', 'callform');
+    });
+</script>
+
+<script>
+    { % comment %
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        { % endcomment %
+        }
+        // Get the form element
+        var form = document.getElementById('form-hx');
+
+        // Add event listener for normal form submission
+        form.addEventListener('submit', function() {
+            for (let instanceName in CKEDITOR.instances) {
+                if (CKEDITOR.instances.hasOwnProperty(instanceName)) {
+                    console.log(`Syncing CKEditor: ${instanceName}`);
+                    CKEDITOR.instances[instanceName].updateElement();
+                }
+            }
+        });
+
+        // Also sync before HTMX submission
+        document.body.addEventListener('htmx:beforeSend', function(evt) {
+            if (evt.detail.elt === form) {
+                for (let instanceName in CKEDITOR.instances) {
+                    if (CKEDITOR.instances.hasOwnProperty(instanceName)) {
+                        CKEDITOR.instances[instanceName].updateElement();
+                    }
+                }
+            }
+        });
+
+        { % comment %
+        }
+    }); { % endcomment %
+    }
+</script>

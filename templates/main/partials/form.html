@@ -1,0 +1,80 @@
+<div id="response_register"></div>
+<form method="POST" enctype="multipart/form-data"
+      hx-post="{% url 'main_register' %}"
+      hx-trigger="submit"
+      hx-target="#response_register"
+      hx-on::after-request="this.reset()">
+  {% csrf_token %}
+  
+  {{ form.non_field_errors }}
+
+  <!-- ✅ Always visible fields -->
+  {{ form.role.label_tag }} {{ form.role }}
+  {{ form.full_name.label_tag }} {{ form.full_name }}
+  {{ form.email.label_tag }} {{ form.email }}
+  {{ form.phone.label_tag }} {{ form.phone }}
+  {{ form.gender.label_tag }} {{ form.gender }}
+  {% comment %} {{ form.profile_picture.label_tag }} {{ form.profile_picture }} {% endcomment %}
+
+  <!-- 🔁 Role-based fields -->
+  <div id="doctor-fields" class="role-group d-none">
+    {{ form.specialization.label_tag }} {{ form.specialization }}
+    {{ form.qualification_level.label_tag }} {{ form.qualification_level }}
+    {{ form.experience_years.label_tag }} {{ form.experience_years }}
+    {{ form.registration_number.label_tag }} {{ form.registration_number }}
+     {% comment %} {% if form.registration_number.help_text %}
+    <small class="form-text text-muted">{{ form.registration_number.help_text }}</small>
+  {% endif %} {% endcomment %}
+    {{ form.consultation_fee.label_tag }} {{ form.consultation_fee }}
+    {{ form.available_from.label_tag }} {{ form.available_from }}
+    {{ form.available_to.label_tag }} {{ form.available_to }}
+    {{ form.available_days.label_tag }} {{ form.available_days }}
+    {{ form.clinic_location.label_tag }} {{ form.clinic_location }}
+  </div>
+
+  <div id="patient-fields" class="role-group d-none">
+      {{ form.date_of_birth.label_tag }} {{ form.date_of_birth }}
+      {{ form.address.label_tag }} {{ form.address }}
+    {{ form.city.label_tag }} {{ form.city }}
+    {{ form.state.label_tag }} {{ form.state }}
+    {{ form.country.label_tag }} {{ form.country }}
+    {{ form.pincode.label_tag }} {{ form.pincode }}
+    {{ form.blood_group.label_tag }} {{ form.blood_group }}
+    {{ form.emergency_contact.label_tag }} {{ form.emergency_contact }}
+    {{ form.insurance_provider.label_tag }} {{ form.insurance_provider }}
+    {{ form.insurance_number.label_tag }} {{ form.insurance_number }}
+    {{ form.medical_history.label_tag }} {{ form.medical_history }}
+  </div>
+
+  {% comment %} <div id="staff-fields" class="role-group d-none">
+    {{ form.designation.label_tag }} {{ form.designation }}
+    {{ form.department.label_tag }} {{ form.department }}
+  </div> {% endcomment %}
+
+  <button type="submit" class="btn btn-primary w-100 mt-2">Sign Up</button>
+</form>
+
+<script>
+  {% comment %} document.addEventListener('DOMContentLoaded', function () { {% endcomment %}
+    const roleSelect = document.getElementById('id_role');
+
+    const roleGroups = {
+      2: document.getElementById('doctor-fields'),  // Doctor
+      1: document.getElementById('patient-fields'), // Patient
+      3: document.getElementById('doctor-fields'),   // Nurse
+    };
+
+    function updateRoleFields() {
+      const selectedRole = parseInt(roleSelect.value);
+      document.querySelectorAll('.role-group').forEach(group => group.classList.add('d-none'));
+      if (roleGroups[selectedRole]) {
+        roleGroups[selectedRole].classList.remove('d-none');
+      }
+    }
+
+    if (roleSelect) {
+      updateRoleFields();  // On page load
+      roleSelect.addEventListener('change', updateRoleFields);  // On change
+    }
+  {% comment %} }); {% endcomment %}
+</script>

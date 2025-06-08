@@ -1,0 +1,87 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'vendor/libs/apex-charts/apex-charts.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/swiper/swiper.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/datatables-bs5/datatables.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css' %}" />
+{% endblock %}
+
+
+
+{% block content %}
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+<div class="container-xxl flex-grow-1 container-p-y">
+    {% if request.user.is_superuser %}
+    {% load hospital_stats %}
+
+    <div class="container my-4">
+        <!-- Hospital Stats -->
+        <h4 class="mb-3">🏥 Hospital Stats</h4>
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+    
+            <!-- Total Hospitals -->
+            <div class="col">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="ti ti-building-hospital display-6 text-primary"></i>
+                        <h5 class="card-title mt-2">Total Hospitals</h5>
+                        <h3 class="card-text">{% if total_hospitals %}{{ total_hospitals }}{% else %}0{% endif %}</h3>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Total Reviews -->
+            <div class="col">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="ti ti-message-star display-6 text-success"></i>
+                        <h5 class="card-title mt-2">Total Reviews</h5>
+                        <h3 class="card-text">{% if total_reviews %}{{ total_reviews }}{% else %}0{% endif %}</h3>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Average Rating -->
+            <div class="col">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="ti ti-star display-6 text-warning"></i>
+                        <h5 class="card-title mt-2">Average Rating</h5>
+                        <h3 class="card-text">{% if average_hospital_rating %}{{ average_hospital_rating }}{% else %}0{% endif %}</h3>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Most Reviewed Hospital -->
+            <div class="col">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="ti ti-trophy display-6 text-info"></i>
+                        <h5 class="card-title mt-2">Top Reviewed</h5>
+                        <h4 class="card-text">{% if most_reviewed_hospital %}{{ most_reviewed_hospital }}{% else %}0{% endif %}</h4>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+    </div>
+    
+    {% endif %}
+    
+</div>
+
+    </div>
+
+{% endblock  %}
+
+
+{% block extra_js %}
+<script src="{% static 'vendor/libs/apex-charts/apexcharts.js' %}"></script>
+<script src="{% static 'vendor/libs/swiper/swiper.js' %}"></script>
+<script src="{% static 'vendor/libs/datatables-bs5/datatables-bootstrap5.js' %}"></script>
+<script src="{% static 'js/dashboards-analytics.js' %}"></script>
+{% endblock %}
