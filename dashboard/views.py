@@ -49,7 +49,7 @@ def custom_login_view(request):
             return HttpResponse(
                 status=204,
                 headers={
-                    'HX-Redirect': "/schedly/admin/"
+                    'HX-Redirect': "/zapslot/admin/"
                 }
             )
         else:
