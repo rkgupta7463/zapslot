@@ -1,9 +1,12 @@
-# compiled Python files
-__pycache__/
-*.pyc
+_pycache_/
+*.py[cod]
+*$py.class
 
-# local settings or secrets
-zapslot/settings.py
+# C extensions
+*.so
+settings.py
+# Distribution / packaging
+.Python
 
 # local DB
 db.sqlite3
