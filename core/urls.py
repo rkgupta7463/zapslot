@@ -19,6 +19,7 @@ urlpatterns = [
     path('doctors/',doctors_list,name="doctors_list"),
     path('info/',aboutus,name="about"),
     path('faq/',faq,name="faq"),
+    path('<slug:title>/hospital/',hospital_details,name="hospital_portfolio"),
     
     ## url's for `reset password`
     path('reset_password/<str:hash>/', forgot_password_reg_email,name="forgot_password_reg_email"),

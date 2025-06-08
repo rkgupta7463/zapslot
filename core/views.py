@@ -276,3 +276,6 @@ def aboutus(request):
 
 def faq(request):
     return render(request, 'faq.html')
+
+def hospital_details(request,title):
+    return render(request, 'portfolio-details.html')
