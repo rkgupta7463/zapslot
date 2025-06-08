@@ -120,8 +120,10 @@
 		<script src="{% static 'main_static/js/jquery-ui.min.js' %}"></script>
 		<!-- Easing JS -->
         <script src="{% static 'main_static/js/easing.js' %}"></script>
+
 		<!-- Color JS -->
-		<script src="{% static 'main_static/js/colors.js' %}"></script>
+		{% comment %} <script src="{% static 'main_static/js/colors.js' %}"></script> {% endcomment %}
+
 		<!-- Popper JS -->
 		<script src="{% static 'main_static/js/popper.min.js' %}"></script>
 		<!-- Bootstrap Datepicker JS -->
@@ -152,6 +154,77 @@
 		<script src="{% static 'main_static/js/bootstrap.min.js' %}"></script>
 		<!-- Main JS -->
 		<script src="{% static 'main_static/js/main.js' %}"></script>
+
+
+		
+				<script>
+$(document).ready(function() {
+    $(".color1").click(function() {
+        $("#colors").attr("href", "{% static 'main_static/css/color/color1.css' %}");
+        return false;
+    });
+
+    $(".color2").click(function() {
+        $("#colors").attr("href", "{% static 'main_static/css/color/color2.css' %}");
+        return false;
+    });
+
+    $(".color3").click(function() {
+        $("#colors").attr("href", "{% static 'main_static/css/color/color3.css' %}");
+        return false;
+    });
+
+    $(".color4").click(function() {
+        $("#colors").attr("href", "{% static 'main_static/css/color/color4.css' %}");
+        return false;
+    });
+
+    $(".color5").click(function() {
+        $("#colors").attr("href", "{% static 'main_static/css/color/color5.css' %}");
+        return false;
+    });
+
+    $(".color6").click(function() {
+        $("#colors").attr("href", "{% static 'main_static/css/color/color6.css' %}");
+        return false;
+    });
+
+    $(".color7").click(function() {
+        $("#colors").attr("href", "{% static 'main_static/css/color/color7.css' %}");
+        return false;
+    });
+
+    $(".color8").click(function() {
+        $("#colors").attr("href", "{% static 'main_static/css/color/color8.css' %}");
+        return false;
+    });
+
+    $(".color9").click(function() {
+        $("#colors").attr("href", "{% static 'main_static/css/color/color9.css' %}");
+        return false;
+    });
+
+    $(".color10").click(function() {
+        $("#colors").attr("href", "{% static 'main_static/css/color/color10.css' %}");
+        return false;
+    });
+
+    $(".color11").click(function() {
+        $("#colors").attr("href", "{% static 'main_static/css/color/color11.css' %}");
+        return false;
+    });
+
+    $(".color12").click(function() {
+        $("#colors").attr("href", "{% static 'main_static/css/color/color12.css' %}");
+        return false;
+    });
+
+    $('.color-plate .color-plate-icon').on("click", function() {
+        $('.color-plate').toggleClass('active');
+    });
+});
+</script>
+
         {% block extra_js %}{% endblock  %}
     </body>
 
