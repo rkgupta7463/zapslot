@@ -1,8 +1,16 @@
-staticfiles/
-aisha
-aisha.pub
-
+# compiled Python files
+__pycache__/
 *.pyc
+
+# local settings or secrets
+zapslot/settings.py
+
+# local DB
 db.sqlite3
 
-zapslot/settings.py
+# static build output
+staticfiles/
+
+# personal SSH keys
+aisha
+aisha.pub
