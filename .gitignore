@@ -1,19 +1,22 @@
-_pycache_/
+__pycache__/
 *.py[cod]
 *$py.class
-
-# C extensions
 *.so
-settings.py
-# Distribution / packaging
-.Python
 
-# local DB
+# Local DB
 db.sqlite3
 
-# static build output
+# Static and build
 staticfiles/
+static/main_static/img/logo/
 
-# personal SSH keys
+# Secret files
 aisha
 aisha.pub
+
+# Optional
+settings.py
+
+
+
+migrations
