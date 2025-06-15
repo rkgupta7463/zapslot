@@ -100,7 +100,7 @@ def register_user_view(request):
         
 
     form = CustomUserRegistrationForm()
-    return render(request, 'main/register.html', {'form': form})
+    return render(request, 'register.html', {'form': form})
 
 
 

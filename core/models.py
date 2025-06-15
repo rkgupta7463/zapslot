@@ -154,7 +154,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     # Role
     role = models.PositiveSmallIntegerField(
         choices=ROLE_CHOICES,
-        default=0
+        default=1
         )
 
     # Optional fields used based on role

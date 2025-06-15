@@ -104,6 +104,36 @@ class CustomUserRegistrationForm(CustomModelForm):
 
         self.custom_field_class()
 
+
+
+class CustomUserRegistrationForm(CustomModelForm):
+    class Meta:
+        model = CustomUser
+        fields = [
+            'full_name', 'email', 'phone', 'gender', 'date_of_birth',
+            'address', 'city', 'state', 'country', 'pincode','profile_picture',
+
+            'blood_group', 'emergency_contact', 'insurance_provider',
+            'insurance_number',
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super(CustomUserRegistrationForm,self).__init__(*args, **kwargs)
+        self.fields['address'].widget.attrs.update({'rows': 3})
+        # self.fields['medical_history'].widget.attrs.update({'rows': 3})
+        # Add Bootstrap styling
+        for field_name, field in self.fields.items():
+            if not isinstance(field.widget, forms.CheckboxInput):
+                field.widget.attrs.update({
+                    'class': 'form-control',
+                    'placeholder': field.label
+                })
+
+        self.custom_field_class()
+
+
+
+
 class EmailLoginForm(forms.Form):
     email = forms.EmailField(
         max_length=254,
